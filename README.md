@@ -13,7 +13,7 @@ make
 ## Run
 
 ```sh
-./tf2agw -s /tmp/tf2agw -a 127.0.0.1 -p 8000 -c KQ6UP-1 -v
+./tf2agw -s /tmp/tf2agw -a 127.0.0.1 -p 8000 -c N0CALL -v
 ```
 
 Then point LinFBB's TF/WA8DED device at `/tmp/tf2agw`.
