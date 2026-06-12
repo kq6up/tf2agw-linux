@@ -106,6 +106,15 @@ static void normalize_call(char *s) {
     while (*s == ' ' || *s == '\t') memmove(s, s+1, strlen(s));
     for (char *p = s; *p; ++p) if (*p >= 'a' && *p <= 'z') *p -= 32;
     s[MAX_CALL-1] = 0;
+    /*
+     * Strip an explicit -0 SSID: "KQ6UP-0" and "KQ6UP" are the same AX.25
+     * station, but Direwolf matches sessions with strcmp, and its radio-side
+     * parser renders SSID 0 without the suffix.  FBB sends "I CALL-0", so
+     * without this, outgoing UAs never match the session ("not for me")
+     * and incoming connects never match the registered callsign.
+     */
+    n = strlen(s);
+    if (n >= 2 && s[n-2] == '-' && s[n-1] == '0') s[n-2] = 0;
 }
 
 static void pack_call(char out[10], const char *call) {
